@@ -1,0 +1,23 @@
+{% extends 'diary/home.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row text">
+        <div class="col-12">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-success">Войти</button>
+                            <a class="btn btn-link" href="{% url 'users:reset_password' %}"
+                               role="button">Восcтановить пароль</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
