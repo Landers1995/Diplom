@@ -1,0 +1,42 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$dVjRU2rMkVqXngyWgXy0Rl$fEE8YJkCQVcCGVP2VAaFk5NOeOOjPx7gIGiUh/mb8EI=",
+      "last_login": "2024-11-20T13:34:35.080Z",
+      "is_superuser": true,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-11-18T12:32:27Z",
+      "email": "admin@example.com",
+      "token": null,
+      "nickname": "Админ",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$hcjSEsbcU0LWFPZVUSjhC7$0Pbld6Beb3D2b334KrxTRwSPIOQsnU/J5vilgHVnam4=",
+      "last_login": "2024-11-20T13:28:50.906Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-11-20T13:09:33.664Z",
+      "email": "il-travkin@yandex.ru",
+      "token": "acb8740e9e2d42ac792d77ffd9abbb1d",
+      "nickname": "Илья",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  }
+]
