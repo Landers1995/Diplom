@@ -14,3 +14,5 @@ urlpatterns = [
     path("diary_edit/<int:pk>/", DiaryUpdateView.as_view(), name="diary_edit"),
     path("diary_delete/<int:pk>/", DiaryDeleteView.as_view(), name="diary_delete"),
  ]
+
+# path("diary/<str:create_date>/", DiaryDetailView.as_view(), name="diary_detail")

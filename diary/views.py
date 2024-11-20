@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 from diary.forms import DiaryForm
 from diary.models import Diary
+import datetime
 
 
 class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -33,9 +34,24 @@ class DiaryListView(LoginRequiredMixin, ListView):
     model = Diary
     #permission_required = 'diary.view_diary'
 
+    def get_queryset(self):
+        return Diary.objects.filter(user=self.request.user)
+
 
 class DiaryDetailView(LoginRequiredMixin, DetailView):
     model = Diary
+
+    # pk_url_kwarg = 'create_date'
+    #
+    def get_queryset(self):
+        return Diary.objects.filter(user=self.request.user)
+
+    def get_object(self, queryset=None):
+        queryset = self.get_queryset()
+        date = self.kwargs.get('create_date')
+        create_date = datetime.datetime.strftime(date, '%Y.%m.%d')
+        diary = queryset.filter(create_date=create_date)
+        return diary
 
 
 class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
