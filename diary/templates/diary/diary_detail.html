@@ -1,0 +1,30 @@
+{% extends 'diary/home.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-6">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ diary.create_date }}</h4>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title pricing-card-title">Заголовок: {{ diary.title }}</h4>
+                    <p class="text-start">Новая запись: {{ diary.body }}</p>
+                    <h1 class="card-title pricing-card-title"></h1>
+                    <div class="btn-group">
+                        {% if user == diary.user %}
+                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'diary:diary_edit' diary.pk %}"
+                           role="button">Изменить</a>
+                        <a class="btn btn-sm btn-outline-danger" href="{% url 'diary:diary_delete' diary.pk %}"
+                           role="button">Удалить</a>
+                        {% endif %}
+                        <a class="btn btn-sm btn-outline-danger" href="{% url 'diary:diary_list' %}"
+                           role="button">Назад</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

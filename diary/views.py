@@ -15,10 +15,10 @@ class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     success_url = reverse_lazy('diary:diary_list')
 
     def form_valid(self, form):
-        mailing = form.save()
+        diary = form.save()
         user = self.request.user
-        mailing.user = user
-        mailing.save()
+        diary.user = user
+        diary.save()
         return super().form_valid(form)
 
 
@@ -31,6 +31,7 @@ class DiaryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 class DiaryListView(LoginRequiredMixin, ListView):
     model = Diary
+    #permission_required = 'diary.view_diary'
 
 
 class DiaryDetailView(LoginRequiredMixin, DetailView):

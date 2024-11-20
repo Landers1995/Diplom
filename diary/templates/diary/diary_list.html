@@ -4,17 +4,20 @@
 <div class="container">
     <div class="row text-center">
         {% if user.is_authenticated %}
-        <a class="p-2 btn btn-outline-primary" href="{% url 'diary:diary_create' %}">Создать текст рассылки</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'diary:diary_create' %}">Создать запись в дневник</a>
         {% endif %}
         <div class="pb-4"></div>
+
         {% for diary in object_list %}
         <div class="col-4">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ diary.title }}</h4>
+                    <h4 class="my-0 font-weight-normal"> {{ diary.create_date }} </h4>
                 </div>
                 <div class="card-body">
-                    <p class="text-start">Текст рассылки: {{ diary.body | slice:100 }}</p>
+                    <p class="text-start">Заголовок: {{ diary.title }}</p>
+                    <p class="text-start">Новая запись: {{ diary.body | slice:20 }}</p>
+                    <p class="text-start">Автор записи: {{ diary.user.nickname }}</p>
                     <h1 class="card-title pricing-card-title"></h1>
                     <div class="btn-group">
                         <a class="btn btn-sm btn-outline-secondary" href="{% url 'diary:diary_detail' diary.pk %}"
@@ -24,6 +27,7 @@
             </div>
         </div>
         {% endfor %}
+
     </div>
 </div>
 {% endblock %}

@@ -4,35 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SkyMailing</title>
+    <title>SkyDiary</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
 {% include 'diary/includes/nav_bar.html' %}
-<div class="pricing-header px-3 py-3 pt-md-2 pb-md-2 mx-auto text-center">
-    <h1 class="display-4">SkyDiary</h1>
-    <p class="lead">SkyDiary - твой личный дневник</p>
-</div>
-
 <div class="container">
     <div class="row text-center">
         <div class="pb-4"></div>
-        {% for diary in object_list %}
-        <div class="col-4">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ diary.title }}</h4>
-                </div>
-                <div class="card-body">
-                    <p class="text-start">Текст рассылки: {{ diary.body | slice:100 }}</p>
-
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+        {% block content %}
+        {% endblock %}
     </div>
 </div>
 
 
-{% block content %}
-{% endblock %}

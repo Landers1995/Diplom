@@ -17,7 +17,7 @@ class StyleFormMixin:
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2',)
+        fields = ('email', 'nickname', 'password1', 'password2',)
 
 
 class ResetPasswordForm(StyleFormMixin, PasswordResetForm):
