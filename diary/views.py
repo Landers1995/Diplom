@@ -46,12 +46,12 @@ class DiaryDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         return Diary.objects.filter(user=self.request.user)
 
-    def get_object(self, queryset=None):
-        queryset = self.get_queryset()
-        date = self.kwargs.get('create_date')
-        create_date = datetime.datetime.strftime(date, '%Y.%m.%d')
-        diary = queryset.filter(create_date=create_date)
-        return diary
+    # def get_object(self, queryset=None):
+    #     queryset = self.get_queryset()
+    #     date = self.kwargs.get('create_date')
+    #     create_date = datetime.datetime.strftime(date, '%Y.%m.%d')
+    #     diary = queryset.filter(create_date=create_date)
+    #     return diary
 
 
 class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):

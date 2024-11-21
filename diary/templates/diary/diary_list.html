@@ -3,14 +3,11 @@
 {% block content %}
 <div class="container">
     <div class="row text-center">
-        {% if user.is_authenticated %}
-        <a class="p-2 btn btn-outline-primary" href="{% url 'diary:diary_create' %}">Создать запись в дневник</a>
-        {% endif %}
-        <div class="pb-4"></div>
+
 
 
         {% for diary in object_list %}
-        <div class="col-4">
+        <div class="col-12">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal"> {{ diary.create_date }} </h4>
