@@ -1,11 +1,11 @@
-{% extends 'diary/home.html' %}
+{% extends 'diary/diary_list.html' %}
 
 {% block content %}
 <div class="container">
     <div class="row text">
         <div class="col-12">
             <form class="row" method="post" enctype="multipart/form-data">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="card">
                         {% if object %}
                         <p class='card-text'>Изменение записы</p>

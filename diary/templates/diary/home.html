@@ -10,14 +10,32 @@
 <body>
 {% include 'diary/includes/nav_bar.html' %}
 <div class="container">
-    <div class="row text-center">
+    <div class="row text">
         <div class="pb-4"></div>
+        <div class="col-3">
+            {% if user.is_authenticated %}
+            <a class="p-2 btn btn-outline-primary" href="{% url 'diary:diary_create' %}">Создать запись в дневник</a>
+            {% endif %}
+            <div class="pb-4"></div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger">Действие</button>
+                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Переключатель выпадающего списка</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Действие</a></li>
+                </ul>
+            </div>
+        </div>
 
-
-
-        {% block content %}
-        {% endblock %}
+        <div class="col-9">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
 </div>
-
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
 

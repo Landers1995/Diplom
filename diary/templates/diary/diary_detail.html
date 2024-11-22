@@ -1,16 +1,16 @@
-{% extends 'diary/home.html' %}
+{% extends 'diary/diary_list.html' %}
 
 {% block content %}
 <div class="container">
     <div class="row text-center">
-        <div class="col-6">
+        <div class="col-12">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ diary.create_date }}</h4>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title pricing-card-title">Заголовок: {{ diary.title }}</h4>
-                    <p class="text-start">Новая запись: {{ diary.body }}</p>
+                    <h4 class="card-title pricing-card-title">{{ diary.title }}</h4>
+                    <p class="text-start" style="text-indent: 25px" >{{ diary.body }}</p>
                     <h1 class="card-title pricing-card-title"></h1>
                     <div class="btn-group">
                         {% if user == diary.user %}
