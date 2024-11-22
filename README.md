@@ -155,3 +155,98 @@ python manage.py runserver
 ### Заключение
 
 Теперь у вас есть выпадающий список с датами, которые содержатся в модели "Дневник". Вы можете модифицировать функционал формы и представления в зависимости от ваших требований. Надеюсь, это поможет вам в работе с Django!
+
+
+
+
+
+Для реализации поиска по атрибутам `title` и `body` вашей модели `Diary` в проекте на Django 4.2, вам нужно выполнить несколько шагов, включая создание формы поиска, обновление представления и изменение шаблона для отображения результатов. Давайте рассмотрим этот процесс более подробно.
+
+### Шаг 1: Модель Diary
+
+Убедитесь, что ваша модель `Diary` выглядит примерно так:
+
+```python
+from django.db import models
+
+class Diary(models.Model):
+    title = models.CharField(max_length=200)
+    body = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.title
+```
+
+### Шаг 2: Создание формы поиска
+
+Создайте форму для обработки запросов поиска. Это можно сделать с помощью Django Forms. В вашем приложении создайте файл `forms.py`, если его еще нет:
+
+```python
+from django import forms
+
+class SearchForm(forms.Form):
+    query = forms.CharField(label='Поиск', max_length=100)
+```
+
+### Шаг 3: Обновление представления
+
+Теперь вам нужно обновить ваше представление, чтобы обработать запросы поиска. В `views.py` вашего приложения добавьте следующее:
+
+```python
+from django.shortcuts import render
+from .models import Diary
+from .forms import SearchForm
+
+def diary_list(request):
+    form = SearchForm()
+    diaries = Diary.objects.all()
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            diaries = diaries.filter(title__icontains=query) | diaries.filter(body__icontains=query)
+
+    return render(request, 'your_template.html', {'form': form, 'diaries': diaries})
+```
+
+### Шаг 4: Изменение шаблона
+
+Теперь обновите ваш шаблон, чтобы отобразить форму и результаты поиска. Например, в `your_template.html`:
+
+```html
+<form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="get">
+    {{ form.as_p }}  <!-- Отображение формы -->
+    <button type="submit" class="btn btn-secondary">Поиск</button>
+</form>
+
+<h2>Результаты поиска:</h2>
+<ul>
+    {% for diary in diaries %}
+        <li>
+            <strong>{{ diary.title }}</strong>: {{ diary.body }}
+        </li>
+    {% empty %}
+        <li>Нет результатов для вашего поиска.</li>
+    {% endfor %}
+</ul>
+```
+
+### Шаг 5: Настройка URL
+
+Не забудьте добавить URL для вашего представления в `urls.py`:
+
+```python
+from django.urls import path
+from .views import diary_list
+
+urlpatterns = [
+    path('', diary_list, name='diary_list'),
+]
+```
+
+### Шаг 6: Стиль и улучшения
+
+Вы можете добавить CSS классы к элементам для улучшения стиля, а также вы можете использовать JavaScript для добавления динамики в ваше приложение (например, AJAX поиск). 
+
+После выполнения всех этих шагов у вас будет форма поиска, которая позволяет искать записи модели `Diary` по полям `title` и `body`. Теперь пользователи смогут вводить текст в форму и видеть результаты поиска на той же странице.
