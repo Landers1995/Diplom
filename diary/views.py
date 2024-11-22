@@ -4,10 +4,9 @@ from django.urls import reverse_lazy, reverse
 from django.core.management import call_command
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from diary.forms import DiaryForm
+from diary.forms import DiaryForm, DiaryDateForm, DiarySearchForm
 from diary.models import Diary
 import datetime
-
 
 class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Diary
@@ -41,8 +40,8 @@ class DiaryListView(LoginRequiredMixin, ListView):
 class DiaryDetailView(LoginRequiredMixin, DetailView):
     model = Diary
 
-    # pk_url_kwarg = 'create_date'
-    #
+    pk_url_kwarg = 'create_date'
+
     def get_queryset(self):
         return Diary.objects.filter(user=self.request.user)
 
@@ -58,3 +57,29 @@ class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Diary
     permission_required = 'diary.delete_diary'
     success_url = reverse_lazy('diary:diary_list')
+
+
+# def diary_view(request):
+#     form = DiaryDateForm()
+#     if request.method == "POST":
+#         form = DiaryDateForm(request.POST)
+#         if form.is_valid():
+#             selected_date = form.cleaned_data['create_date']
+#             # Здесь можно обработать выбранную дату (например, сохранить, вывести и т.д.)
+#             return render(request, 'diary/diary_detail.html', {'selected_date': selected_date})
+#
+#     return render(request, 'diary/diary_list.html', {'form': form})
+
+
+
+def diary_list(request):
+    form = DiarySearchForm()
+    diaries = Diary.objects.all()
+
+    if 'query' in request.GET:
+        form = DiarySearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            diaries = diaries.filter(title__icontains=query) | diaries.filter(body__icontains=query)
+
+    return render(request, 'dairy_list.html', {'form': form, 'diaries': diaries})

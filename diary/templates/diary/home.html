@@ -17,7 +17,6 @@
             <a class="p-2 btn btn-outline-primary" href="{% url 'diary:diary_create' %}">Создать запись в дневник</a>
             {% endif %}
             <div class="pb-4"></div>
-            <!-- Пример отдельной кнопки danger -->
             <div class="btn-group">
                 <button type="button" class="btn btn-danger">Действие</button>
                 <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
@@ -26,12 +25,6 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Действие</a></li>
-                    <li><a class="dropdown-item" href="#">Другое действие</a></li>
-                    <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Отделенная ссылка</a></li>
                 </ul>
             </div>
         </div>
@@ -42,5 +35,7 @@
         </div>
     </div>
 </div>
-
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
 

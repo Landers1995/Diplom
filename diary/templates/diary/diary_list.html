@@ -1,32 +1,64 @@
-{% extends 'diary/home.html' %}
-
-{% block content %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SkyDiary</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+{% include 'diary/includes/nav_bar.html' %}
 <div class="container">
-    <div class="row text-center">
+    <div class="row text">
+        <div class="pb-4"></div>
+        <div class="col-3">
+            {% if user.is_authenticated %}
+            <a class="p-2 btn btn-outline-primary" href="{% url 'diary:diary_create' %}">Создать запись в дневник</a>
 
+            <div class="pb-4"></div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Выбрать запись
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Действие</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
 
-
-        {% for diary in object_list %}
-        <div class="col-12">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal"> {{ diary.create_date }} </h4>
-                </div>
-                <div class="card-body">
-                    <p class="text-start">Заголовок: {{ diary.title }}</p>
-                    <p class="text-start">Новая запись: {{ diary.body | slice:20 }}</p>
-                    <p class="text-start">Автор записи: {{ diary.user.nickname }}</p>
-                    <h1 class="card-title pricing-card-title"></h1>
-                    <div class="btn-group">
-                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'diary:diary_detail' diary.pk %}"
-                           role="button">Подробно</a>
+        <div class="col-9">
+            {% block content %}
+            <div class="container">
+                <div class="row text-center">
+                    {% for diary in object_list %}
+                    <div class="col-12">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal"> {{ diary.create_date }} </h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-start">{{ diary.title }}</p>
+                                <p class="text-start" style="text-indent: 25px">{{ diary.body | slice:86 }}</p>
+                                <p class="text-start">Автор записи: {{ diary.user.nickname }}</p>
+                                <h1 class="card-title pricing-card-title"></h1>
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       href="{% url 'diary:diary_detail' diary.pk %}"
+                                       role="button">Подробно</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-        {% endfor %}
-
-
     </div>
 </div>
 {% endblock %}
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
