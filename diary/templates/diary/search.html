@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method='post'>
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Поиск</button>
+</form>
+<hr>
+<ul>
+    {% for diary in object_list %}
+        <li>
+            {{ diary.title }} - {{ diary.body }}
+        </li>
+    {% empty %}
+        Записей не найдено
+    {% endfor %}
+</ul>
+
+</body>
+</html>

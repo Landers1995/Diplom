@@ -18,6 +18,3 @@ class Diary(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# create_date = models.DateField(unique=True, auto_now_add=True, verbose_name='Дата создания записи')

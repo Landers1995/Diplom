@@ -8,6 +8,7 @@ from diary.forms import DiaryForm, DiarySearchForm
 from diary.models import Diary
 import datetime
 from django.db.utils import IntegrityError
+from django.db.models import Q
 
 
 class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -34,7 +35,6 @@ class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
             return self.form_invalid(form)
 
 
-
 class DiaryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Diary
     form_class = DiaryForm
@@ -45,7 +45,6 @@ class DiaryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 class DiaryListView(LoginRequiredMixin, ListView):
     model = Diary
     paginate_by = 2
-    #permission_required = 'diary.view_diary'
 
     def get_queryset(self):
         return Diary.objects.filter(user=self.request.user)
@@ -72,13 +71,6 @@ class DiaryDetailView(LoginRequiredMixin, DetailView):
     def get_slug_field(self):
         return 'create_date'
 
-    # def get_object(self, queryset=None):
-    #     queryset = self.get_queryset()
-    #     date = self.kwargs.get('create_date')
-    #     create_date = datetime.datetime.strftime(date, '%Y.%m.%d')
-    #     diary = queryset.filter(create_date=create_date)
-    #     return diary
-
 
 class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Diary
@@ -91,27 +83,14 @@ class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
         return date
 
 
-# def diary_view(request):
-#     form = DiaryDateForm()
-#     if request.method == "POST":
-#         form = DiaryDateForm(request.POST)
-#         if form.is_valid():
-#             selected_date = form.cleaned_data['create_date']
-#             # Здесь можно обработать выбранную дату (например, сохранить, вывести и т.д.)
-#             return render(request, 'diary/diary_detail.html', {'selected_date': selected_date})
-#
-#     return render(request, 'diary/diary_list.html', {'form': form})
-
-
-
-def diary_list(request):
+def diary_search(request):
     form = DiarySearchForm()
-    diaries = Diary.objects.all()
-
-    if 'query' in request.GET:
-        form = DiarySearchForm(request.GET)
+    diaries = []
+    if request.method == 'POST':
+        form = DiarySearchForm(request.POST)
         if form.is_valid():
             query = form.cleaned_data['query']
-            diaries = diaries.filter(title__icontains=query) | diaries.filter(body__icontains=query)
+            diaries = Diary.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
 
-    return render(request, 'dairy_list.html', {'form': form, 'diaries': diaries})
+    return render(request, 'diary/search.html', {'form': form, 'object_list': diaries})
+

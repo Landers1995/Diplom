@@ -28,10 +28,9 @@
             </svg>
 
             <span class="fs-4">SkyDiary - твой личный дневник</span>
-
         </a>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="GET">
-            <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="query">
-        </form>
+
+        <li><a href="{% url 'diary:diary_search' %}" class="text-black">Поиск</a></li>
+
     </div>
 </header>
