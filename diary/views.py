@@ -44,6 +44,7 @@ class DiaryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 class DiaryListView(LoginRequiredMixin, ListView):
     model = Diary
+    paginate_by = 2
     #permission_required = 'diary.view_diary'
 
     def get_queryset(self):
