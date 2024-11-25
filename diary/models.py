@@ -14,6 +14,7 @@ class Diary(models.Model):
     class Meta:
         verbose_name = "Запись в дневнике"
         verbose_name_plural = "Записи в дневнике"
+        unique_together = ["user", "create_date"]
 
     def __str__(self):
         return self.title

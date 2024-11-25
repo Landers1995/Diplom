@@ -23,12 +23,13 @@
                     Выбрать запись
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Действие</a></li>
+                    {% for date in date_list %}
+                    <li><a class="dropdown-item" href="{% url 'diary:diary_detail' date %}">{{date}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
             {% endif %}
         </div>
-
         <div class="col-9">
             {% block content %}
             <div class="container">
@@ -46,7 +47,7 @@
                                 <h1 class="card-title pricing-card-title"></h1>
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-outline-secondary"
-                                       href="{% url 'diary:diary_detail' diary.pk %}"
+                                       href="{% url 'diary:diary_detail' diary.create_date %}"
                                        role="button">Подробно</a>
                                 </div>
                             </div>

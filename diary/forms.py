@@ -9,11 +9,11 @@ class DiaryForm(StyleFormMixin, forms.ModelForm):
         exclude = ('user',)
 
 
-class DiaryDateForm(StyleFormMixin, forms.Form):
-    date = forms.ModelChoiceField(
-        queryset=Diary.objects.all(),
-        empty_label="Выберите дату"
-    )
+# class DiaryDateForm(StyleFormMixin, forms.Form):
+#     date = forms.ModelChoiceField(
+#         queryset=Diary.objects.all(),
+#         empty_label="Выберите дату"
+#     )
 
 
 class DiarySearchForm(forms.Form):
