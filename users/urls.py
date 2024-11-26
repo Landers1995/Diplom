@@ -1,11 +1,7 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 from users.views import UserCreateView, email_verification, UserResetPasswordView, NotMailPageView
-# from django.views.decorators.cache import cache_page
-
 from users.apps import UsersConfig
-
 
 app_name = UsersConfig.name
 

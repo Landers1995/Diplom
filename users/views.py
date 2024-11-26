@@ -9,7 +9,6 @@ from django.urls import reverse
 from config.settings import EMAIL_HOST_USER
 from users.forms import StyleFormMixin
 from django.contrib.auth.views import PasswordResetView
-
 from django.contrib.auth.models import Group
 
 

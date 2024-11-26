@@ -14,12 +14,12 @@
                     <h1 class="card-title pricing-card-title"></h1>
                     <div class="btn-group">
                         {% if user == diary.user %}
-                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'diary:diary_edit' diary.pk %}"
+                        <a class="btn btn-sm btn-outline-warning" href="{% url 'diary:diary_edit' diary.pk %}"
                            role="button">Изменить</a>
                         <a class="btn btn-sm btn-outline-danger" href="{% url 'diary:diary_delete' diary.pk %}"
                            role="button">Удалить</a>
                         {% endif %}
-                        <a class="btn btn-sm btn-outline-danger" href="{% url 'diary:diary_list' %}"
+                        <a class="btn btn-sm btn-outline-primary" href="{% url 'diary:diary_list' %}"
                            role="button">Назад</a>
                     </div>
                 </div>

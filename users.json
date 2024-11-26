@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$600000$dVjRU2rMkVqXngyWgXy0Rl$fEE8YJkCQVcCGVP2VAaFk5NOeOOjPx7gIGiUh/mb8EI=",
-      "last_login": "2024-11-20T13:34:35.080Z",
+      "last_login": "2024-11-26T11:46:59.217Z",
       "is_superuser": true,
       "first_name": "",
       "last_name": "",
@@ -22,8 +22,8 @@
     "model": "users.user",
     "pk": 6,
     "fields": {
-      "password": "pbkdf2_sha256$600000$hcjSEsbcU0LWFPZVUSjhC7$0Pbld6Beb3D2b334KrxTRwSPIOQsnU/J5vilgHVnam4=",
-      "last_login": "2024-11-20T13:28:50.906Z",
+      "password": "pbkdf2_sha256$600000$8jiBDNraaF4U9d1iUzhnju$MwpZU1BwyNd1zYeer1vP8IoKCSpliRON+QoBg2tkpXc=",
+      "last_login": "2024-11-26T12:38:50.183Z",
       "is_superuser": false,
       "first_name": "",
       "last_name": "",

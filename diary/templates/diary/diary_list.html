@@ -15,11 +15,11 @@
         <div class="pb-4"></div>
         <div class="col-3">
             {% if user.is_authenticated %}
-            <a class="p-2 btn btn-outline-primary" href="{% url 'diary:diary_create' %}">Создать запись в дневник</a>
+            <a class="p-2 btn btn-primary" href="{% url 'diary:diary_create' %}">Создать запись в дневник</a>
 
             <div class="pb-4"></div>
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     Выбрать запись
                 </button>
@@ -47,7 +47,7 @@
                                 <p class="text-start">Автор записи: {{ diary.user.nickname }}</p>
                                 <h1 class="card-title pricing-card-title"></h1>
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-secondary"
+                                    <a class="btn btn-outline-secondary"
                                        href="{% url 'diary:diary_detail' diary.create_date %}"
                                        role="button">Подробно</a>
                                 </div>

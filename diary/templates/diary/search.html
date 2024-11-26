@@ -1,25 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form method='post'>
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Поиск</button>
-</form>
-<hr>
-<ul>
-    {% for diary in object_list %}
-        <li>
-            {{ diary.title }} - {{ diary.body }}
-        </li>
-    {% empty %}
-        Записей не найдено
-    {% endfor %}
-</ul>
+{% extends 'diary/diary_list.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <form method='post'>
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Поиск</button>
+            </form>
+            <ul>
+                {% for diary in object_list %}
+                <div class="row text">
+                    <p class="text-start">Заголовок записи:</p>
+                    <p class="text-start">{{ diary.title }}</p>
+                    <hr>
+                    <p class="text-start">Текст записи:</p>
+                    <p class="text-start">{{ diary.body }}</p>
+                {% empty %}
+                    Записей не найдено
+                {% endfor %}
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

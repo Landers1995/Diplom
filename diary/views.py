@@ -1,9 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy, reverse
-from django.core.management import call_command
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
 from diary.forms import DiaryForm, DiarySearchForm
 from diary.models import Diary
 import datetime
@@ -23,10 +21,6 @@ class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return date
 
     def form_valid(self, form):
-        # diary = form.save()
-        # user = self.request.user
-        # diary.user = user
-        # diary.save()
         form.instance.user = self.request.user
         try:
             return super().form_valid(form)
