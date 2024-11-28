@@ -11,8 +11,7 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
-    nickname = models.CharField(max_length=50, verbose_name="Псевдоним", blank=True,
-        null=True,)
+    nickname = models.CharField(max_length=50, verbose_name="Псевдоним")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

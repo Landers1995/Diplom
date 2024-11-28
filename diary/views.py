@@ -9,16 +9,19 @@ from django.db.utils import IntegrityError
 from django.db.models import Q
 
 
-class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class DairyListMixin:
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ct = super().get_context_data(object_list=object_list, **kwargs)
+        qs = Diary.objects.filter(user=self.request.user)
+        ct['date_list'] = qs.values_list('create_date', flat=True).distinct()
+        return ct
+
+
+class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, DairyListMixin, CreateView):
     model = Diary
     form_class = DiaryForm
     permission_required = 'diary.add_diary'
     success_url = reverse_lazy('diary:diary_list')
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        date = super().get_context_data(object_list=object_list, **kwargs)
-        date['date_list'] = Diary.objects.values_list('create_date').distinct()
-        return date
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -29,27 +32,22 @@ class DiaryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
             return self.form_invalid(form)
 
 
-class DiaryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class DiaryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, DairyListMixin, UpdateView):
     model = Diary
     form_class = DiaryForm
     permission_required = 'diary.change_diary'
     success_url = reverse_lazy('diary:diary_list')
 
 
-class DiaryListView(LoginRequiredMixin, ListView):
+class DiaryListView(LoginRequiredMixin, DairyListMixin, ListView):
     model = Diary
     paginate_by = 2
 
     def get_queryset(self):
         return Diary.objects.filter(user=self.request.user)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        date = super().get_context_data(object_list=object_list, **kwargs)
-        date['date_list'] = Diary.objects.filter(user=self.request.user).values_list('create_date', flat=True).distinct()
-        return date
 
-
-class DiaryDetailView(LoginRequiredMixin, DetailView):
+class DiaryDetailView(LoginRequiredMixin, DairyListMixin, DetailView):
     model = Diary
 
     slug_url_kwarg = 'create_date'
@@ -57,31 +55,21 @@ class DiaryDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         return Diary.objects.filter(user=self.request.user)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        date = super().get_context_data(object_list=object_list, **kwargs)
-        date['date_list'] = sorted(Diary.objects.filter(user=self.request.user).values_list('create_date', flat=True).distinct())
-        return date
-
     def get_slug_field(self):
         return 'create_date'
 
 
-class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DairyListMixin, DeleteView):
     model = Diary
     permission_required = 'diary.delete_diary'
     success_url = reverse_lazy('diary:diary_list')
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        date = super().get_context_data(object_list=object_list, **kwargs)
-        date['date_list'] = Diary.objects.values_list('create_date').distinct()
-        return date
 
 
 def diary_search(request):
     form = DiarySearchForm()
     diaries = []
-    if request.method == 'POST':
-        form = DiarySearchForm(request.POST)
+    if request.method == 'GET':
+        form = DiarySearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
             diaries = Diary.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
