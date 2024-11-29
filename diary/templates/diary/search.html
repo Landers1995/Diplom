@@ -9,6 +9,13 @@
                 {{ form }}
                 <button type="submit">Поиск</button>
             </form>
+            {% if form.errors %}
+            <ul>
+                {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
             <ul>
                 {% for diary in object_list %}
                 <div class="row text">
@@ -17,9 +24,9 @@
                     <hr>
                     <p class="text-start">Текст записи:</p>
                     <p class="text-start">{{ diary.body }}</p>
-                {% empty %}
+                    {% empty %}
                     Записей не найдено
-                {% endfor %}
+                    {% endfor %}
                 </div>
             </ul>
         </div>

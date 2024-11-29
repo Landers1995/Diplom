@@ -66,13 +66,10 @@ class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DairyListMixi
 
 
 def diary_search(request):
-    form = DiarySearchForm()
+    form = DiarySearchForm(request.GET or None)  # Форма будет пустой, если GET-данных нет
     diaries = []
-    if request.method == 'GET':
-        form = DiarySearchForm(request.GET)
-        if form.is_valid():
-            query = form.cleaned_data['query']
-            diaries = Diary.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
-
+    if request.GET and form.is_valid():  # Проверка, есть ли данные в GET
+        query = form.cleaned_data['query']
+        diaries = Diary.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
     return render(request, 'diary/search.html', {'form': form, 'object_list': diaries})
 
