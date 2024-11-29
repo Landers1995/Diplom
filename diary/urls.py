@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.views.decorators.cache import cache_page
 
 from diary.apps import DiaryConfig
-from diary.views import DiaryListView, DiaryDetailView, DiaryCreateView, DiaryUpdateView, DiaryDeleteView, diary_search
+from diary.views import DiaryListView, DiaryDetailView, DiaryCreateView, DiaryUpdateView, DiaryDeleteView, DiarySearchView
 
 app_name = DiaryConfig.name
 
@@ -13,7 +13,7 @@ urlpatterns = [
     path("diary_create/", DiaryCreateView.as_view(), name="diary_create"),
     path("diary_edit/<int:pk>/", DiaryUpdateView.as_view(), name="diary_edit"),
     path("diary_delete/<int:pk>/", DiaryDeleteView.as_view(), name="diary_delete"),
-    path('search', diary_search, name='diary_search'),
+    path('search', DiarySearchView.as_view(), name='diary_search'),
  ]
 
 

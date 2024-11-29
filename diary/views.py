@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from diary.forms import DiaryForm, DiarySearchForm
@@ -65,11 +65,17 @@ class DiaryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DairyListMixi
     success_url = reverse_lazy('diary:diary_list')
 
 
-def diary_search(request):
-    form = DiarySearchForm(request.GET or None)  # Форма будет пустой, если GET-данных нет
-    diaries = []
-    if request.GET and form.is_valid():  # Проверка, есть ли данные в GET
-        query = form.cleaned_data['query']
-        diaries = Diary.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
-    return render(request, 'diary/search.html', {'form': form, 'object_list': diaries})
+class DiarySearchView(DairyListMixin, View):
+    form_class = DiarySearchForm
+    template_name = 'diary/search.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(request.GET or None)
+        diaries = []
+
+        if request.GET and form.is_valid():
+            query = form.cleaned_data['query']
+            diaries = Diary.objects.filter(Q(title__icontains=query) | Q(body__icontains=query), user=self.request.user)
+
+        return render(request, self.template_name, {'form': form, 'object_list': diaries})
 

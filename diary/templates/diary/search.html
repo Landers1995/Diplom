@@ -19,11 +19,12 @@
             <ul>
                 {% for diary in object_list %}
                 <div class="row text">
+
                     <p class="text-start">Заголовок записи:</p>
                     <p class="text-start">{{ diary.title }}</p>
-                    <hr>
                     <p class="text-start">Текст записи:</p>
                     <p class="text-start">{{ diary.body }}</p>
+                    <hr>
                     {% empty %}
                     Записей не найдено
                     {% endfor %}
